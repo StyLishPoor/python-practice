@@ -119,42 +119,58 @@ def printYard(yard):
 #printYard(tileMissingYard(5,20,11))
 #print(CanTile(3,[(0,0),(6,1),(1,6),(6,6)]))
 
-def binarySearch(num,T,minR,minC):
+def binarySearch(num,T,minR=0,minC=0,count=0):
+    print(minR,minC)
     print(T)
-    if len(T) == 1:
-        if(T[0] == num):
-            return minR,minC
-        else:
-            return -1,-1
-    else: 
-        searchR = len(T)//2 
-        print(searchR)
-        searchC = len(T[0])//2 
-        print(searchC)
-        if(T[searchR][searchC]==num):
+    searchR = (len(T)-1)//2 
+    searchC = (len(T[0])-1)//2 
+    print("search",searchR,searchC,T[searchR][searchC])
+    if (T[searchR][searchC]) == num:
+        print("Found")
+        return searchR+minR,searchC+minC
+    elif len(T) == 1:
+        print("next")
+        return -1,-1
+
+        """
+        searchR = (len(T)-1)//2 
+        print("min",minR,minC)
+        searchC = (len(T[0])-1)//2 
+        print("search",searchR,searchC,T[searchR][searchC])
+        
+    
+        
+            if(T[searchR][searchC]==num):
+            print("Correct")
+
             return searchR+minR,searchC+minC
-        elif(T[searchR][searchC] > num):
-            nextT = []
-            for i in range(searchR+1):
-                nextT.append(T[i][:searchC+1]) 
-            return binarySearch(num,nextT,minR,minC)
-        else:
-            right = []
-            down = []
-            diag = []
-            for i in range(searchR+1):
-                right.append(T[i][searchC+1:])
-            for i in range(searchR+1,len(T)):
-                down.append(T[i][:searchC])
-            for i in range(searchR+1,len(T)):
-                diag.append(T[i][searchC+1:])
-            binarySearch(num,right,minR,searchC+1)
-            binarySearch(num,down,searchR+1,minC)
-            binarySearch(num,diag,searchR+1,searchC+1)
-            return searchR,searchC
+        """
+    elif(T[searchR][searchC] > num):
+        nextT = []
+        for i in range(searchR+1):
+
+            nextT.append(T[i][:searchC+1]) 
+        return binarySearch(num,nextT)
+    else:
+        right = []
+        down = []
+        diag = []
+        for i in range(searchR+1):
+            right.append(T[i][searchC+1:])
+        minC = searchC + 1
+        for i in range(searchR+1,len(T)):
+            down.append(T[i][:searchC])
+        minR = searchR + 1
+        for i in range(searchR+1,len(T)):
+            diag.append(T[i][searchC+1:])
+        minR,minC = searchR+1,searchC+1
+        binarySearch(num,right)
+        binarySearch(num,down)
+        binarySearch(num,diag)
+        return searchR,searchC
 
 T = [[1,4,7,11,15],[2,5,8,12,19],[3,6,9,16,22],[10,13,14,17,24],[18,21,23,26,30]]
-print(binarySearch(8,T,0,0))
+print(binarySearch(11,T))
 
 
 
