@@ -28,4 +28,4 @@ def howHardIsCrystal(n,d):
 
 n = int(input("input height: "))
 d = int(input("input ball num: "))
-howHardIsCrystal(n,d)            
+howHardIsCrystal(n,d)
